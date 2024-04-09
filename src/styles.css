@@ -1,0 +1,22 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: rgb(32, 32, 32);
+    color: white;
+}
+
+header {
+    background-color: rgb(32, 32, 32);
+    color: white;
+    height: 100px;
+}
+
+main {
+    min-height: calc(100vh - 100px);
+}

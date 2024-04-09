@@ -1,0 +1,41 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="container py-5 h-100" *ngIf="!isLoading">
+  <div class="row py-5">
+    <div class="col-12 d-flex justify-content-center">
+      <form class="text-center w-50" #userProductsForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- ETA PLACEHOLDER -->
+        <div class="input-group mb-3">
+          <span class="input-group-text">Età</span>
+          <input type="text" class="form-control" [placeholder]="loggedUser['eta']" disabled>
+        </div>
+        <!-- CLIENTE PLACEHOLDER -->
+        <div class="input-group">
+          <span class="input-group-text">Cliente</span>
+          <input type="text" class="form-control" [placeholder]="loggedUser['cliente'] ? 'Si' : 'No'" disabled>
+        </div>
+        <!-- PRODOTTO -->
+        <div class="input-group mt-5 mb-3">
+          <label for="prodotto" class="input-group-text">Prodotto</label>
+          <select class="form-select" name="prodotto" id="prodotto" [ngModel]="loggedUserProducts[0]"
+            #prodotto="ngModel" required>
+            <option *ngFor="let product of loggedUserProducts" [ngValue]="product">
+              {{ product.codice }} - {{ product.descrizione }}
+            </option>
+          </select>
+        </div>
+        <!-- SUBMIT -->
+        <button type="submit" class="btn my-4 w-100"
+          [ngClass]="{'btn-primary': userProductsForm.valid, 'btn-secondary': userProductsForm.invalid}"
+          [disabled]="userProductsForm.invalid">
+          {{ userProductsForm.invalid ? 'Compila il form' : 'Invia' }}
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- API ERROR MESSAGE -->
+  <div class="row" *ngIf="errorMessage !== ''">
+    <div class="col-12 text-center py-4">
+      <span class="text-danger">{{ errorMessage }}</span>
+    </div>
+  </div>
+</div>

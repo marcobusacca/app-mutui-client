@@ -1,0 +1,83 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="container py-5 h-100" *ngIf="!isLoading">
+  <div class="row py-5">
+    <!-- INFORMAZIONI PRODOTTO SELEZIONATO -->
+    <div class="col-12 d-flex justify-content-center">
+      <h3 class="mb-5">{{ selectedProduct['codice'] }} - {{ selectedProduct['descrizione'] }}</h3>
+    </div>
+    <div class="col-12 d-flex justify-content-center">
+      <form class="text-center w-50" #userProductRequestForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- IMPORTO -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Importo')">
+          <label for="importo" class="form-label">Importo</label>
+          <input type="number" class="form-control" [ngClass]="{'is-invalid': importo.invalid && importo.touched}"
+            placeholder="Inserisci l'importo" name="importo" id="importo" ngModel #importo="ngModel" required
+            pattern="^[1-9]\d*$" min="1">
+          <div class="text-danger form-text" *ngIf="importo.invalid && importo.touched">Devi inserire l'importo</div>
+        </div>
+        <!-- RICHIESTO -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Richiesto')">
+          <label for="richiesto" class="form-label">Richiesto</label>
+          <input type="number" class="form-control" [ngClass]="{'is-invalid': richiesto.invalid && richiesto.touched}"
+            placeholder="Inserisci l'importo richiesto" name="richiesto" id="richiesto" ngModel #richiesto="ngModel"
+            required pattern="^[1-9]\d*$" min="1">
+          <div class="text-danger form-text" *ngIf="richiesto.invalid && richiesto.touched">Devi inserire l'importo
+            richiesto</div>
+        </div>
+        <!-- DURATA -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Durata')">
+          <label for="durata" class="form-label">Durata</label>
+          <select class="form-select" name="durata" id="durata" [ngModel]="inputDurataForm[0]" #durata="ngModel"
+            required>
+            <option *ngFor="let durata of inputDurataForm" [value]="durata">{{ durata }}</option>
+          </select>
+          <div class="text-danger form-text" *ngIf="durata.invalid && durata.touched">Devi inserire la durata</div>
+        </div>
+        <!-- REDDITO -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Reddito')">
+          <label for="reddito" class="form-label">Reddito</label>
+          <input type="number" class="form-control" [ngClass]="{'is-invalid': reddito.invalid && reddito.touched}"
+            placeholder="Inserisci il tuo reddito" name="reddito" id="reddito" ngModel #reddito="ngModel" required
+            pattern="^[1-9]\d*$" min="1">
+          <div class="text-danger form-text" *ngIf="reddito.invalid && reddito.touched">Devi inserire il tuo reddito
+          </div>
+        </div>
+        <!-- COSTO RISTRUTTURAZIONE -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Costo ristrutturazione')">
+          <label for="costoRistrutturazione" class="form-label">Costo ristrutturazione</label>
+          <input type="number" class="form-control"
+            [ngClass]="{'is-invalid': costoRistrutturazione.invalid && costoRistrutturazione.touched}"
+            placeholder="Inserisci il costo di ristruttuazione" name="costoRistrutturazione" id="costoRistrutturazione"
+            ngModel #costoRistrutturazione="ngModel" required pattern="^[1-9]\d*$" min="1">
+          <div class="text-danger form-text" *ngIf="costoRistrutturazione.invalid && costoRistrutturazione.touched">
+            Devi inserire il costo di ristruttuazione
+          </div>
+        </div>
+        <!-- CLASSE ENERGETICA -->
+        <div class="text-start mb-3" *ngIf="campiInput.includes('Classe energetica')">
+          <label for="classeEnergetica" class="form-label">Classe energetica</label>
+          <select class="form-select" name="classeEnergetica" id="classeEnergetica" [ngModel]="classeEnergeticaForm[0]"
+            #classeEnergetica="ngModel" required>
+            <option *ngFor="let classeEnergetica of classeEnergeticaForm" [value]="classeEnergetica">{{ classeEnergetica
+              }}</option>
+          </select>
+          <div class="text-danger form-text" *ngIf="classeEnergetica.invalid && classeEnergetica.touched">
+            Devi inserire la classe energetica
+          </div>
+        </div>
+        <!-- SUBMIT -->
+        <button type="submit" class="btn my-4 w-100"
+          [ngClass]="{'btn-primary': userProductRequestForm.valid, 'btn-secondary': userProductRequestForm.invalid}"
+          [disabled]="userProductRequestForm.invalid">
+          {{ userProductRequestForm.invalid ? 'Compila il form' : 'Invia' }}
+        </button>
+      </form>
+    </div>
+  </div>
+  <!-- API ERROR MESSAGE -->
+  <div class="row" *ngIf="errorMessage !== ''">
+    <div class="col-12 text-center py-4">
+      <span class="text-danger">{{ errorMessage }}</span>
+    </div>
+  </div>
+</div>

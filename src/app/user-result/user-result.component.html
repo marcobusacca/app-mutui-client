@@ -1,0 +1,82 @@
+<div class="container py-5 h-100">
+  <div class="row py-3">
+    <div class="col-12 mb-5">
+      <h2>Risultato Finale</h2>
+      <h4>Tasso: {{ finalResult['tasso'] }}%</h4>
+      <h4>Rata mensile: {{ rataMensileFormattata(finalResult['rata']) }}€</h4>
+    </div>
+    <div class="col-12 mb-5">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+          <tr>
+            <th scope="col">Età</th>
+            <th scope="col">Cliente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-4">{{ loggedUser['eta'] }} anni</td>
+            <td class="py-4">{{ loggedUser['cliente'] ? 'Si' : 'No' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 mb-5">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+          <tr>
+            <th scope="col">Prodotto</th>
+            <th scope="col" *ngIf="campiInput.includes('Importo')">Importo</th>
+            <th scope="col" *ngIf="campiInput.includes('Richiesto')">Richiesto</th>
+            <th scope="col" *ngIf="campiInput.includes('Durata')">Durata</th>
+            <th scope="col" *ngIf="campiInput.includes('Reddito')">Reddito</th>
+            <th scope="col" *ngIf="campiInput.includes('Costo ristrutturazione')">Costo ristrutturazione</th>
+            <th scope="col" *ngIf="campiInput.includes('Classe energetica')">Classe energetica</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-4">{{ selectedProduct['codice'] }} - {{ selectedProduct['descrizione'] }}</td>
+            <td class="py-4" *ngIf="campiInput.includes('Importo')">{{ loggedUserForm['importo'] }}€
+            </td>
+            <td class="py-4" *ngIf="campiInput.includes('Richiesto')">{{ loggedUserForm['richiesto']
+              }}€</td>
+            <td class="py-4" *ngIf="campiInput.includes('Durata')">{{ loggedUserForm['durata'] }} anni
+            </td>
+            <td class="py-4" *ngIf="campiInput.includes('Reddito')">{{ loggedUserForm['reddito'] }}€
+            </td>
+            <td class="py-4" *ngIf="campiInput.includes('Costo ristrutturazione')">
+              {{ loggedUserForm.costoRistrutturazione }}€
+            </td>
+            <td *ngIf="campiInput.includes('Classe energetica')" class="py-4">
+              {{ loggedUserForm['classeEnergetica'] }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-12 mb-5">
+      <table class="table table-hover table-bordered text-center">
+        <thead>
+          <tr>
+            <th scope="col">LTV</th>
+            <th scope="col">Durata</th>
+            <th scope="col">Tasso</th>
+            <th scope="col">Rata Mensile</th>
+            <th scope="col">Rimborso Totale</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="py-4">{{ calcolaLtv() }}%</td>
+            <td class="py-4">{{ loggedUserForm['durata'] }} anni</td>
+            <td class="py-4">{{ finalResult['tasso'] }}%</td>
+            <td class="py-4">{{ rataMensileFormattata(finalResult['rata']) }}€</td>
+            <td class="py-4">{{ calcolaRimborsoFinale(finalResult['rata'], loggedUserForm['durata']) }}€
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
