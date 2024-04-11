@@ -1,39 +1,41 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, isDevMode } from "@angular/core";
 
-import { LoggedUser } from "../model/logged-user.model";
+import { UserData } from "../model/user-data.model";
 import { Prodotto } from "../model/prodotto.model";
 import { LoggedUserForm } from "../model/logged-user-form.model";
 import { LoggedUserFormData } from "../model/logged-user-form-data.model";
 
 @Injectable({ providedIn: 'root' })
-export class LoggedUserService {
+export class UserService {
 
-    private baseUrl = 'http://127.0.0.1:8080/api';
-    public loggedUser: LoggedUser;
+    private baseUrl: string;
+
+    public userData: UserData;
+
     public loggedUserProducts: Prodotto[];
     public selectedProduct: Prodotto;
+
     public campiInput: string[];
+
     public loggedUserForm: LoggedUserForm;
     public loggedUserFormData: LoggedUserFormData;
+
     public finalResult: { [key: string]: number };
 
-    constructor(private http: HttpClient) { }
-
-    isAuthenticated() {
-        const promise = new Promise(
-            (resolve, reject) => {
-                resolve(this.loggedUser);
-            }
-        );
-        return promise;
+    constructor(private http: HttpClient) {
+        if (isDevMode()) {
+            this.baseUrl = 'http://127.0.0.1:8080/api';
+        } else {
+            this.baseUrl = '';
+        }
     }
 
     getLoggedUserProducts() {
         return this.http
             .post<{ esito: boolean, messaggio: string, response: Prodotto[] }>(
                 `${this.baseUrl}/logged-user-products`,
-                this.loggedUser
+                this.userData
             )
     }
 

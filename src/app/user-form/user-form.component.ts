@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Prodotto } from '../model/prodotto.model';
-import { LoggedUserService } from '../service/logged-user.service';
+import { UserService } from '../service/user.service';
 import { Router } from '@angular/router';
 import { LoggedUserForm } from '../model/logged-user-form.model';
 import { LoggedUserFormData } from '../model/logged-user-form-data.model';
@@ -23,11 +23,11 @@ export class UserFormComponent implements OnInit {
   maxDurataForm = 30;
   classeEnergeticaForm = ["G", "F", "E", "D", "C", "B", "A1", "A2", "A3", "A4"];
 
-  constructor(private loggedUserService: LoggedUserService, private router: Router) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit() {
-    this.selectedProduct = this.loggedUserService.selectedProduct;
-    this.campiInput = this.loggedUserService.campiInput;
+    this.selectedProduct = this.userService.selectedProduct;
+    this.campiInput = this.userService.campiInput;
 
     for (let i = 5; i <= this.maxDurataForm; i += 5) {
       this.inputDurataForm.push(i);
@@ -67,19 +67,19 @@ export class UserFormComponent implements OnInit {
     }
 
     // CREO L'ISTANZA DEL LOGGED_USER_FORM
-    this.loggedUserService.loggedUserForm = new LoggedUserForm(importo, richiesto, durata, reddito, costoRistrutturazione, classeEnergetica);
+    this.userService.loggedUserForm = new LoggedUserForm(importo, richiesto, durata, reddito, costoRistrutturazione, classeEnergetica);
 
     // CREO L'ISTANZA DEL LOGGED_USER_FORM_DATA
-    this.loggedUserService.loggedUserFormData = new LoggedUserFormData(this.selectedProduct, this.loggedUserService.loggedUserForm);
+    this.userService.loggedUserFormData = new LoggedUserFormData(this.selectedProduct, this.userService.loggedUserForm);
 
     // AVVIO LA CHIAMATA API ED OTTENGO LA RISPOSTA
-    this.loggedUserService.getLoggedUserFinalResult().subscribe(
+    this.userService.getLoggedUserFinalResult().subscribe(
       (response) => {
         if (!response.esito) {
           this.errorMessage = response.messaggio;
           this.isLoading = false;
         } else {
-          this.loggedUserService.finalResult = response.response;
+          this.userService.finalResult = response.response;
           this.router.navigate(['/user/result']);
         }
       },

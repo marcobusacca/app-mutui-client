@@ -12,18 +12,22 @@ import { UserProductsComponent } from './user-products/user-products.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { UserResultComponent } from './user-result/user-result.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { UserDataComponent } from './user-data/user-data.component';
+import { SignUpFormComponent } from './sign-up-form/sign-up-form.component';
 
 @NgModule({
-  declarations: [	
+  declarations: [
     AppComponent,
     HeaderComponent,
     LoaderComponent,
+    SignUpFormComponent,
     LoginFormComponent,
+    UserDataComponent,
     UserProductsComponent,
     UserFormComponent,
     UserResultComponent,
-      NotFoundComponent
-   ],
+    NotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     FormsModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { LoggedUserService } from '../service/logged-user.service';
-import { LoggedUser } from '../model/logged-user.model';
+import { UserService } from '../service/user.service';
+import { UserData } from '../model/user-data.model';
 import { Prodotto } from '../model/prodotto.model';
 import { LoggedUserForm } from '../model/logged-user-form.model';
 
@@ -10,20 +10,20 @@ import { LoggedUserForm } from '../model/logged-user-form.model';
   styleUrls: ['./user-result.component.css']
 })
 export class UserResultComponent implements OnInit {
-  loggedUser: LoggedUser;
+  userData: UserData;
   selectedProduct: Prodotto;
   campiInput: string[];
   loggedUserForm: LoggedUserForm;
   finalResult: { [key: string]: number };
 
-  constructor(private loggedUserService: LoggedUserService) { }
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
-    this.loggedUser = this.loggedUserService.loggedUser;
-    this.selectedProduct = this.loggedUserService.selectedProduct;
-    this.campiInput = this.loggedUserService.campiInput;
-    this.loggedUserForm = this.loggedUserService.loggedUserForm;
-    this.finalResult = this.loggedUserService.finalResult;
+    this.userData = this.userService.userData;
+    this.selectedProduct = this.userService.selectedProduct;
+    this.campiInput = this.userService.campiInput;
+    this.loggedUserForm = this.userService.loggedUserForm;
+    this.finalResult = this.userService.finalResult;
   }
 
   calcolaLtv() {

@@ -1,0 +1,43 @@
+<app-loader *ngIf="isLoading"></app-loader>
+<div class="container py-5 h-100" *ngIf="!isLoading">
+  <div class="row py-5">
+    <!-- ERRORS ALERT -->
+    <div class="col-12 d-flex justify-content-center">
+      <div class="alert alert-danger w-50" *ngIf="eta.invalid && eta.touched">
+        <ul>
+          <li>L'età è obbligatoria e deve essere superiore a zero</li>
+        </ul>
+      </div>
+    </div>
+    <!-- FORM -->
+    <div class="col-12 d-flex justify-content-center">
+      <form class="text-center w-50" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <!-- ETA -->
+        <div class="input-group mb-3">
+          <label for="eta" class="input-group-text">Età</label>
+          <input type="number" class="form-control" [ngClass]="{'is-invalid': eta.invalid && eta.touched}"
+            placeholder="Inserisci la tua età" name="eta" id="eta" ngModel #eta="ngModel" required pattern="^[1-9]\d*$"
+            min="1">
+        </div>
+        <!-- CLIENTE -->
+        <div class="input-group mb-3">
+          <label for="cliente" class="input-group-text">Cliente</label>
+          <select class="form-select" name="cliente" id="cliente" [ngModel]="false" #cliente="ngModel" required>
+            <option [ngValue]="false">No</option>
+            <option [ngValue]="true">Si</option>
+          </select>
+        </div>
+        <!-- SUBMIT -->
+        <button type="submit" class="btn my-4 w-100"
+          [ngClass]="{'btn-primary': loginForm.valid, 'btn-secondary': loginForm.invalid}"
+          [disabled]="loginForm.invalid">
+          {{ loginForm.invalid ? 'Compila il form' : 'Invia' }}
+        </button>
+      </form>
+    </div>
+    <!-- API ERROR MESSAGE -->
+    <div class="col-12 text-center py-4" *ngIf="errorMessage !== ''">
+      <span class="text-danger">{{ errorMessage }}</span>
+    </div>
+  </div>
+</div>
