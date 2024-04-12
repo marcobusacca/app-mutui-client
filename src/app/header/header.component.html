@@ -5,9 +5,10 @@
         <h1>Mutui</h1>
       </div>
       <div class="col-6 d-flex justify-content-center align-items-center">
-        <a routerLink="login" class="btn btn-primary mx-3">Login</a>
-        <a routerLink="sign-up" class="btn btn-primary mx-3">Sign Up</a>
-        <a class="btn btn-primary mx-3">Logout</a>
+        <a routerLink="login" class="btn btn-primary mx-3" *ngIf="!isAuthenticated">Login</a>
+        <a routerLink="sign-up" class="btn btn-primary mx-3" *ngIf="!isAuthenticated">Sign Up</a>
+        <a class="btn btn-primary mx-3" (click)="onLogout()" *ngIf="isAuthenticated">Logout</a>
+        <a class="btn btn-secondary mx-3" *ngIf="isAuthenticated">{{ timer }}</a>
       </div>
     </div>
   </div>

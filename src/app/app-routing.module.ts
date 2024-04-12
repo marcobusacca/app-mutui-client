@@ -18,32 +18,32 @@ const appRoutes: Routes = [
     },
     {
         path: 'login',
+        canActivate: [AuthGuardService],
         component: LoginFormComponent
     },
     {
         path: 'sign-up',
+        canActivate: [AuthGuardService],
         component: SignUpFormComponent
     },
     {
         path: 'user/data',
+        canActivate: [AuthGuardService],
         component: UserDataComponent
     },
     {
         path: 'user/products',
         canActivate: [AuthGuardService],
-        canActivateChild: [AuthGuardService],
         component: UserProductsComponent
     },
     {
         path: 'user/form',
         canActivate: [AuthGuardService],
-        canActivateChild: [AuthGuardService],
         component: UserFormComponent
     },
     {
         path: 'user/result',
         canActivate: [AuthGuardService],
-        canActivateChild: [AuthGuardService],
         component: UserResultComponent
     },
     {

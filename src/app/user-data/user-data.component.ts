@@ -31,7 +31,7 @@ export class UserDataComponent implements OnInit {
 
     // AVVIO LA CHIAMATA API ED OTTENGO LA RISPOSTA
     this.userService.getLoggedUserProducts().subscribe(
-      (response) => {
+      response => {
         if (!response.esito) {
           this.errorMessage = response.messaggio;
           this.isLoading = false;
@@ -40,7 +40,7 @@ export class UserDataComponent implements OnInit {
           this.router.navigate(['/user/products']);
         }
       },
-      (error) => {
+      error => {
         console.error('Errore nella chiamata API getLoggedUserProducts:', error);
         this.errorMessage = 'Errore di connessione. Riprovare più tardi.';
         this.isLoading = false;
