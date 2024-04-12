@@ -1,14 +1,13 @@
 <header>
   <div class="container-fluid text-center shadow py-4 h-100">
     <div class="row">
-      <div class="col-6 d-flex justify-content-center align-items-center">
+      <div class="d-flex justify-content-center align-items-center"
+        [ngClass]="{'col-12': !isAuthenticated, 'col-6': isAuthenticated}">
         <h1>Mutui</h1>
       </div>
-      <div class="col-6 d-flex justify-content-center align-items-center">
-        <a routerLink="login" class="btn btn-primary mx-3" *ngIf="!isAuthenticated">Login</a>
-        <a routerLink="sign-up" class="btn btn-primary mx-3" *ngIf="!isAuthenticated">Sign Up</a>
-        <a class="btn btn-primary mx-3" (click)="onLogout()" *ngIf="isAuthenticated">Logout</a>
-        <a class="btn btn-secondary mx-3" *ngIf="isAuthenticated">{{ timer }}</a>
+      <div class="col-6 d-flex justify-content-center align-items-center" *ngIf="isAuthenticated">
+        <a class="btn btn-primary mx-3" (click)="onLogout()">Logout</a>
+        <a class="btn btn-secondary mx-3">{{ timer }}</a>
       </div>
     </div>
   </div>

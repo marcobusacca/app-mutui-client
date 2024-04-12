@@ -3,7 +3,7 @@
   <div class="row py-5">
     <!-- FORM -->
     <div class="col-12 d-flex justify-content-center">
-      <form class="text-center w-50" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+      <form class="w-50" #loginForm="ngForm" (ngSubmit)="onSubmit()">
         <!-- EMAIL -->
         <div class="text-start mb-3">
           <label for="email" class="form-label">Email</label>
@@ -23,12 +23,19 @@
             La password è obbligatoria e deve avere una lunghezza minima di 8 caratteri
           </div>
         </div>
-        <!-- SUBMIT -->
-        <button type="submit" class="btn my-4 w-100"
-          [ngClass]="{'btn-primary': loginForm.valid, 'btn-secondary': loginForm.invalid}"
-          [disabled]="loginForm.invalid">
-          {{ loginForm.invalid ? 'Compila il form' : 'Login' }}
-        </button>
+        <!-- BUTTON -->
+        <div class="text-end my-4">
+          <!-- REDIRECT TO SIGN-UP-FORM -->
+          <button type="button" class="btn btn-light mx-1" routerLink="/sign-up">
+            Registrati
+          </button>
+          <!-- SUBMIT -->
+          <button type="submit" class="btn mx-1"
+            [ngClass]="{'btn-primary': loginForm.valid, 'btn-secondary': loginForm.invalid}"
+            [disabled]="loginForm.invalid">
+            {{ loginForm.invalid ? 'Compila il form' : 'Login' }}
+          </button>
+        </div>
       </form>
     </div>
     <!-- API ERROR MESSAGE -->

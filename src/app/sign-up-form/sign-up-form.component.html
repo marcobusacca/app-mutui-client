@@ -3,7 +3,7 @@
   <div class="row py-5">
     <!-- FORM -->
     <div class="col-12 d-flex justify-content-center">
-      <form class="text-center w-50" #signUpForm="ngForm" (ngSubmit)="onSubmit()">
+      <form class="w-50" #signUpForm="ngForm" (ngSubmit)="onSubmit()">
         <!-- NOME -->
         <div class="text-start mb-3">
           <label for="nome" class="form-label">Nome</label>
@@ -52,12 +52,19 @@
             Devi inserire la tua data di nascita
           </div>
         </div>
-        <!-- SUBMIT -->
-        <button type="submit" class="btn my-4 w-100"
-          [ngClass]="{'btn-primary': signUpForm.valid, 'btn-secondary': signUpForm.invalid}"
-          [disabled]="signUpForm.invalid">
-          {{ signUpForm.invalid ? 'Compila il form' : 'Registrati' }}
-        </button>
+        <!-- BUTTON -->
+        <div class="text-end my-4">
+          <!-- REDIRECT TO LOGIN-FORM -->
+          <button type="button" class="btn btn-light mx-1" routerLink="/login">
+            Login
+          </button>
+          <!-- SUBMIT -->
+          <button type="submit" class="btn mx-1"
+            [ngClass]="{'btn-primary': signUpForm.valid, 'btn-secondary': signUpForm.invalid}"
+            [disabled]="signUpForm.invalid">
+            {{ signUpForm.invalid ? 'Compila il form' : 'Registrati' }}
+          </button>
+        </div>
       </form>
     </div>
     <!-- API ERROR MESSAGE -->
