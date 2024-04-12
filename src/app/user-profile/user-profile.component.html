@@ -1,0 +1,27 @@
+<div class="container py-5 h-100">
+  <div class="row py-5">
+    <div class="col-12">
+      <ul class="list-group w-100">
+        <li class="list-group-item">
+          <span class="fw-bold">Nome: </span>
+          <span>{{ user['nome'] }}</span>
+        </li>
+        <li class="list-group-item">
+          <span class="fw-bold">Cognome: </span>
+          <span>{{ user['cognome'] }}</span>
+        </li>
+        <li class="list-group-item">
+          <span class="fw-bold">Email: </span>
+          <span>{{ user['email'] }}</span>
+        </li>
+        <li class="list-group-item">
+          <span class="fw-bold">Data di nascita: </span>
+          <span>{{ user['dataDiNascita'] }}</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-12 text-center my-5">
+      <button type="button" class="btn btn-success" routerLink="/">Ritorna alla home page</button>
+    </div>
+  </div>
+</div>

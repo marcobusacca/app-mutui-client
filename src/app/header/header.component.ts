@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
+  userEmail: string;
   isAuthenticated = false;
   timer: number;
   private timerInterval: any;
@@ -18,7 +19,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
-      if (this.isAuthenticated) {
+      if (this.isAuthenticated && this.authService.tokenExpirationDate > new Date()) {
+        this.userEmail = user['email'];
         this.updateTimer();
         this.timerInterval = setInterval(() => {
           this.updateTimer();

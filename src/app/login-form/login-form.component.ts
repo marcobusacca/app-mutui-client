@@ -23,11 +23,11 @@ export class LoginFormComponent implements OnInit {
       return;
     }
 
-    const email = this.loginForm.value['email'];
-    const password = this.loginForm.value['password'];
-
     this.isLoading = true;
     this.errorMessage = '';
+
+    const email = this.loginForm.value['email'];
+    const password = this.loginForm.value['password'];
 
     this.authService.login(
       email,

@@ -10,7 +10,7 @@ export class AuthGuardService implements CanActivate, CanActivateChild {
   constructor(private authService: AuthService, private userService: UserService, private router: Router) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean | UrlTree | Promise<boolean | UrlTree> | Observable<boolean | UrlTree> {
-    if (route.routeConfig.path === 'user/data') {
+    if (route.routeConfig.path === 'user/data' || route.routeConfig.path === 'user/profile') {
       return this.authService.user.pipe(
         take(1),
         map(user => {

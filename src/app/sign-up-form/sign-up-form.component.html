@@ -47,7 +47,7 @@
           <input type="date" class="form-control"
             [ngClass]="{'is-invalid': dataDiNascita.invalid && dataDiNascita.touched}"
             placeholder="Inserisci la tua data di nascita" name="dataDiNascita" id="dataDiNascita" ngModel
-            #dataDiNascita="ngModel" required minlength="8">
+            #dataDiNascita="ngModel" required>
           <div class="text-danger form-text" *ngIf="dataDiNascita.invalid && dataDiNascita.touched">
             Devi inserire la tua data di nascita
           </div>

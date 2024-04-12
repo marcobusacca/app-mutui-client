@@ -4,10 +4,13 @@ import { AuthGuardService } from "./service/auth-guard.service";
 
 import { LoginFormComponent } from "./login-form/login-form.component";
 import { SignUpFormComponent } from "./sign-up-form/sign-up-form.component";
+import { UserProfileComponent } from "./user-profile/user-profile.component";
+
 import { UserDataComponent } from "./user-data/user-data.component";
 import { UserProductsComponent } from "./user-products/user-products.component";
 import { UserFormComponent } from "./user-form/user-form.component";
 import { UserResultComponent } from "./user-result/user-result.component";
+
 import { NotFoundComponent } from "./not-found/not-found.component";
 
 const appRoutes: Routes = [
@@ -25,6 +28,11 @@ const appRoutes: Routes = [
         path: 'sign-up',
         canActivate: [AuthGuardService],
         component: SignUpFormComponent
+    },
+    {
+        path: 'user/profile',
+        canActivate: [AuthGuardService],
+        component: UserProfileComponent
     },
     {
         path: 'user/data',
