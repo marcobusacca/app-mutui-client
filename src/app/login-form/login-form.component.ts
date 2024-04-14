@@ -34,7 +34,6 @@ export class LoginFormComponent implements OnInit {
       password
     ).subscribe(
       responseData => {
-        console.log(responseData);
         if (!responseData.esito) {
           this.errorMessage = responseData.messaggio;
           this.isLoading = false;
@@ -44,6 +43,7 @@ export class LoginFormComponent implements OnInit {
       },
       error => {
         this.errorMessage = error;
+        this.isLoading = false;
       }
     );
   }

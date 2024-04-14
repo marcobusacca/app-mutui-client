@@ -6,50 +6,81 @@
       <form class="w-50" #signUpForm="ngForm" (ngSubmit)="onSubmit()">
         <!-- NOME -->
         <div class="text-start mb-3">
+          <!-- LABEL -->
           <label for="nome" class="form-label">Nome</label>
+          <!-- INPUT -->
           <input type="text" class="form-control" [ngClass]="{'is-invalid': nome.invalid && nome.touched}"
             placeholder="Inserisci il tuo nome" name="nome" id="nome" ngModel #nome="ngModel" required>
+          <!-- INPUT ERROR MESSAGE -->
           <div class="text-danger form-text" *ngIf="nome.invalid && nome.touched">
             Devi inserire il tuo nome
           </div>
         </div>
         <!-- COGNOME -->
         <div class="text-start mb-3">
+          <!-- LABEL -->
           <label for="cognome" class="form-label">Cognome</label>
+          <!-- INPUT -->
           <input type="text" class="form-control" [ngClass]="{'is-invalid': cognome.invalid && cognome.touched}"
             placeholder="Inserisci il tuo cognome" name="cognome" id="cognome" ngModel #cognome="ngModel" required>
+          <!-- INPUT ERROR MESSAGE -->
           <div class="text-danger form-text" *ngIf="cognome.invalid && cognome.touched">
             Devi inserire il tuo cognome
           </div>
         </div>
         <!-- EMAIL -->
         <div class="text-start mb-3">
+          <!-- LABEL -->
           <label for="email" class="form-label">Email</label>
+          <!-- INPUT -->
           <input type="email" class="form-control" [ngClass]="{'is-invalid': email.invalid && email.touched}"
             placeholder="Inserisci la tua email" name="email" id="email" ngModel #email="ngModel" required email>
+          <!-- INPUT ERROR MESSAGE -->
           <div class="text-danger form-text" *ngIf="email.invalid && email.touched">
             Devi inserire la tua email
           </div>
         </div>
         <!-- PASSWORD -->
         <div class="text-start mb-3">
+          <!-- LABEL -->
           <label for="password" class="form-label">Password</label>
+          <!-- INPUT -->
           <input type="password" class="form-control" [ngClass]="{'is-invalid': password.invalid && password.touched}"
             placeholder="Inserisci la tua password" name="password" id="password" ngModel #password="ngModel" required
             minlength="8">
+          <!-- INPUT ERROR MESSAGE -->
           <div class="text-danger form-text" *ngIf="password.invalid && password.touched">
             La password è obbligatoria e deve avere una lunghezza minima di 8 caratteri
           </div>
         </div>
         <!-- DATA DI NASCITA -->
         <div class="text-start mb-3">
+          <!-- LABEL -->
           <label for="dataDiNascita" class="form-label">Data di nascita</label>
+          <!-- INPUT -->
           <input type="date" class="form-control"
-            [ngClass]="{'is-invalid': dataDiNascita.invalid && dataDiNascita.touched}"
-            placeholder="Inserisci la tua data di nascita" name="dataDiNascita" id="dataDiNascita" ngModel
-            #dataDiNascita="ngModel" required>
+            [ngClass]="{'is-invalid': dataDiNascita.invalid && dataDiNascita.touched}" name="dataDiNascita"
+            id="dataDiNascita" ngModel #dataDiNascita="ngModel" required>
+          <!-- INPUT ERROR MESSAGE -->
           <div class="text-danger form-text" *ngIf="dataDiNascita.invalid && dataDiNascita.touched">
             Devi inserire la tua data di nascita
+          </div>
+        </div>
+        <!-- IMMAGINE DI PROFILO -->
+        <div class="text-start mb-3">
+          <!-- LABEL -->
+          <label for="dataDiNascita" class="form-label">Immagine di profilo</label>
+          <!-- INPUT -->
+          <input type="file" class="form-control"
+            [ngClass]="{'is-invalid': userImageInput.invalid && userImageInput.touched}" name="userImageInput"
+            id="userImageInput" ngModel #userImageInput="ngModel" required (change)="onFileSelected($event)">
+          <!-- INPUT ERROR MESSAGE -->
+          <div class="text-danger form-text" *ngIf="userImageInput.invalid && userImageInput.touched">
+            Devi inserire la tua immagine di profilo
+          </div>
+          <!-- IMMAGINE DI PROFILO PREVIEW -->
+          <div class="my-5" *ngIf="userImage">
+            <img [src]="userImage['url']" [alt]="userImage['file'].name" width="300px">
           </div>
         </div>
         <!-- BUTTON -->

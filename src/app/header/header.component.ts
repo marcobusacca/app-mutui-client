@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { Subscription } from 'rxjs';
+import { User } from '../model/user.model';
+import { SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-header',
@@ -9,7 +11,8 @@ import { Subscription } from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
-  userEmail: string;
+  loggedUser: User;
+  loggedUserImageUrl: SafeUrl;
   isAuthenticated = false;
   timer: number;
   private timerInterval: any;
@@ -20,7 +23,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSubscription = this.authService.user.subscribe(user => {
       this.isAuthenticated = !!user;
       if (this.isAuthenticated && this.authService.tokenExpirationDate > new Date()) {
-        this.userEmail = user['email'];
+        this.loggedUser = user;
+        this.loggedUserImageUrl = user['userImage']['url'];
+        console.log(this.loggedUserImageUrl);
         this.updateTimer();
         this.timerInterval = setInterval(() => {
           this.updateTimer();
