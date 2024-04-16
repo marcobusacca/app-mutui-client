@@ -17,8 +17,9 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.authService.user.subscribe(user => {
       this.user = user;
-      console.log(this.user);
-      this.loggedUserAudioUrl = user['userAudio']['url'];
+      if (this.user) {
+        this.loggedUserAudioUrl = user['userAudio']['url'];
+      }
     });
   }
 }
