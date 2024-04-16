@@ -37,6 +37,7 @@ export class SignUpFormComponent implements OnInit {
 
     if (event.target['files']) {
 
+      this.errorMessage = "";
       const userImageFile: File = event.target['files'][0];
 
       if (allowedTypes.includes(userImageFile.type)) {
@@ -49,6 +50,10 @@ export class SignUpFormComponent implements OnInit {
         this.errorMessage = "Sono consentiti solo file di tipo jpeg, png, gif, bmp, webp, svg+xml, tiff, x-icon.";
       }
     }
+  }
+
+  onRemoveUserImage() {
+    this.userImage = null;
   }
 
   onSubmit() {

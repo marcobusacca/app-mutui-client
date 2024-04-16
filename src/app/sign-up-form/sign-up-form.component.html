@@ -67,20 +67,26 @@
           </div>
         </div>
         <!-- IMMAGINE DI PROFILO -->
-        <div class="text-start mb-3">
-          <!-- LABEL -->
-          <label for="dataDiNascita" class="form-label">Immagine di profilo</label>
-          <!-- INPUT -->
-          <input type="file" class="form-control"
-            [ngClass]="{'is-invalid': userImageInput.invalid && userImageInput.touched}" name="userImageInput"
-            id="userImageInput" ngModel #userImageInput="ngModel" required (change)="onFileSelected($event)">
-          <!-- INPUT ERROR MESSAGE -->
-          <div class="text-danger form-text" *ngIf="userImageInput.invalid && userImageInput.touched">
-            Devi inserire la tua immagine di profilo
+        <div class="d-flex justify-content-center mb-3">
+          <div *ngIf="!userImage" class="w-100">
+            <!-- LABEL -->
+            <label for="dataDiNascita" class="form-label">Immagine di profilo</label>
+            <!-- INPUT -->
+            <input type="file" class="form-control"
+              [ngClass]="{'is-invalid': userImageInput.invalid && userImageInput.touched}" name="userImageInput"
+              id="userImageInput" ngModel #userImageInput="ngModel" required (change)="onFileSelected($event)">
+            <!-- INPUT ERROR MESSAGE -->
+            <div class="text-danger form-text" *ngIf="userImageInput.invalid && userImageInput.touched">
+              Devi inserire la tua immagine di profilo
+            </div>
           </div>
           <!-- IMMAGINE DI PROFILO PREVIEW -->
-          <div class="my-5" *ngIf="userImage">
-            <img [src]="userImage['url']" [alt]="userImage['file'].name" width="300px">
+          <div *ngIf="userImage" class="user-image-logo user-image-signup-form-logo my-3"
+            [ngStyle]="{'background-image': 'url(' + userImage.url['changingThisBreaksApplicationSecurity'] + ')'}">
+            <!-- BADGE RIMUOVI IMMAGINE -->
+            <span class="user-image-signup-form-badge badge bg-danger" (click)="onRemoveUserImage()">
+              <i class="bi bi-x fs-5"></i>
+            </span>
           </div>
         </div>
         <!-- BUTTON -->
@@ -98,7 +104,7 @@
         </div>
       </form>
     </div>
-    <!-- API ERROR MESSAGE -->
+    <!-- ERROR MESSAGE -->
     <div class="col-12 text-center py-4" *ngIf="errorMessage !== ''">
       <span class="text-danger">{{ errorMessage }}</span>
     </div>
