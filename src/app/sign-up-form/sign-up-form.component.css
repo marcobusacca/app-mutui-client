@@ -1,0 +1,13 @@
+.user-image-signup-form-logo {
+    position: relative;
+    width: 150px;
+    height: 150px;
+}
+
+.user-image-signup-form-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    border-radius: 10px;
+    cursor: pointer;
+}
