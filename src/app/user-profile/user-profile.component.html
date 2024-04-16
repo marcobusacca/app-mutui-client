@@ -18,6 +18,12 @@
           <span class="fw-bold">Data di nascita: </span>
           <span>{{ user['dataDiNascita'] }}</span>
         </li>
+        <li class="list-group-item d-flex align-items-center py-3">
+          <span class="fw-bold me-5">Registrazione vocale: </span>
+          <audio class="audio-file w-75" controls>
+            <source [src]="loggedUserAudioUrl" type="audio/wav">
+          </audio>
+        </li>
       </ul>
     </div>
     <div class="col-12 text-center my-5">

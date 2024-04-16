@@ -1,5 +1,5 @@
 <app-loader *ngIf="isLoading"></app-loader>
-<div class="container py-5 h-100" *ngIf="!isLoading">
+<div class="container py-2 h-100" *ngIf="!isLoading">
   <div class="row py-5">
     <!-- FORM -->
     <div class="col-12 d-flex justify-content-center">
@@ -68,9 +68,10 @@
         </div>
         <!-- IMMAGINE DI PROFILO -->
         <div class="d-flex justify-content-center mb-3">
+          <!-- IMMAGINE DI PROFILO INPUT -->
           <div *ngIf="!userImage" class="w-100">
             <!-- LABEL -->
-            <label for="dataDiNascita" class="form-label">Immagine di profilo</label>
+            <label for="userImageInput" class="form-label">Immagine di profilo</label>
             <!-- INPUT -->
             <input type="file" class="form-control"
               [ngClass]="{'is-invalid': userImageInput.invalid && userImageInput.touched}" name="userImageInput"
@@ -84,9 +85,35 @@
           <div *ngIf="userImage" class="user-image-logo user-image-signup-form-logo my-3"
             [ngStyle]="{'background-image': 'url(' + userImage.url['changingThisBreaksApplicationSecurity'] + ')'}">
             <!-- BADGE RIMUOVI IMMAGINE -->
-            <span class="user-image-signup-form-badge badge bg-danger" (click)="onRemoveUserImage()">
+            <span class="user-image-signup-form-badge badge bg-danger" (click)="userImage = null">
               <i class="bi bi-x fs-5"></i>
             </span>
+          </div>
+        </div>
+        <!-- REGISTRAZIONE VOCALE -->
+        <div class="row justify-content-center align-items-center mb-3">
+          <!-- START & STOP BUTTON -->
+          <div class="col-12" *ngIf="!userAudio">
+            <!-- LABEL -->
+            <label class="form-label">{{!isRecording ? 'Registrazione vocale' : 'Registrazione in corso'}}</label>
+            <!-- BUTTON -->
+            <button type="button" class="btn w-100"
+              [ngClass]="{'btn-primary': !isRecording && !isAuthorizingAudio, 'btn-danger': isRecording, 'btn-secondary': isAuthorizingAudio}"
+              [disabled]="isAuthorizingAudio" (click)="onHandleRecording()">
+              {{ !isRecording ? (!isAuthorizingAudio ? 'Registra' : '') : 'Stop' }}
+              <span class="loader" *ngIf="isAuthorizingAudio"></span>
+            </button>
+          </div>
+          <!-- REGISTRAZIONE FINALE -->
+          <div class="col-12" *ngIf="userAudio">
+            <!-- ELIMINA REGISTRAZIONE -->
+            <label class="form-label btn btn-danger" (click)="userAudio = null">
+              Elimina registrazione
+            </label>
+            <!-- AUDIO -->
+            <audio class="audio-file w-100" controls autoplay>
+              <source [src]="userAudio.url" type="audio/wav">
+            </audio>
           </div>
         </div>
         <!-- BUTTON -->
@@ -97,15 +124,15 @@
           </button>
           <!-- SUBMIT -->
           <button type="submit" class="btn mx-1"
-            [ngClass]="{'btn-primary': signUpForm.valid, 'btn-secondary': signUpForm.invalid}"
-            [disabled]="signUpForm.invalid">
-            {{ signUpForm.invalid ? 'Compila il form' : 'Registrati' }}
+            [ngClass]="{'btn-primary': signUpForm.valid && userAudio, 'btn-secondary': signUpForm.invalid || !userAudio}"
+            [disabled]="signUpForm.invalid || !userAudio">
+            {{ signUpForm.invalid || !userAudio ? 'Compila il form' : 'Registrati' }}
           </button>
         </div>
       </form>
     </div>
     <!-- ERROR MESSAGE -->
-    <div class="col-12 text-center py-4" *ngIf="errorMessage !== ''">
+    <div class="col-12 text-center py-3" *ngIf="errorMessage !== ''">
       <span class="text-danger">{{ errorMessage }}</span>
     </div>
   </div>

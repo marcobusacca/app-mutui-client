@@ -25,7 +25,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
       if (this.isAuthenticated && this.authService.tokenExpirationDate > new Date()) {
         this.loggedUser = user;
         this.loggedUserImageUrl = user['userImage']['url'];
-        console.log(this.loggedUserImageUrl);
         this.updateTimer();
         this.timerInterval = setInterval(() => {
           this.updateTimer();

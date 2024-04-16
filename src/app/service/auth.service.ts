@@ -5,6 +5,7 @@ import { BehaviorSubject, tap } from "rxjs";
 import { Router } from "@angular/router";
 import { UserImage } from "../model/user-image.model";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { UserAudio } from "../model/user-audio.model";
 
 export interface ResponseData {
     response: LoggedUserAuthData;
@@ -26,7 +27,7 @@ export class AuthService {
     tokenExpirationDate: Date;
     private tokenExpirationTimer: any;
 
-    constructor(private http: HttpClient, private router: Router, private sanitizer: DomSanitizer) {
+    constructor(private http: HttpClient, private router: Router, private domSanitizer: DomSanitizer) {
         if (isDevMode()) {
             this.baseUrl = 'http://127.0.0.1:8080/api';
         } else {
@@ -81,8 +82,16 @@ export class AuthService {
         if (!userData) {
             return;
         }
+
         const loggedUser: User = userData.user;
-        const loggedUserImage: UserImage = this.getUserImageFromBytes(loggedUser['userImage']);
+        const loggedUserImage: UserImage = new UserImage(
+            this.getFileFromBytes(loggedUser['userImage']),
+            this.getSafeUrlFromFile(this.getFileFromBytes(loggedUser['userImage']))
+        );
+        const loggedUserAudio: UserAudio = new UserAudio(
+            this.getFileFromBytes(loggedUser['userAudio']),
+            this.getSafeUrlFromFile(this.getFileFromBytes(loggedUser['userAudio']))
+        );
 
         const loadedUser = new User(
             loggedUser['nome'],
@@ -90,7 +99,8 @@ export class AuthService {
             loggedUser['email'],
             loggedUser['password'],
             loggedUser['dataDiNascita'],
-            loggedUserImage
+            loggedUserImage,
+            loggedUserAudio
         );
         this.tokenExpirationDate = new Date(userData.tokenExpiration);
         const expirationDuration = this.tokenExpirationDate.getTime() - new Date().getTime();
@@ -115,7 +125,14 @@ export class AuthService {
             localStorage.setItem('userData', JSON.stringify(loggedUserAuthData));
 
             const user: User = loggedUserAuthData.user;
-            const loggedUserImage: UserImage = this.getUserImageFromBytes(user['userImage']);
+            const loggedUserImage: UserImage = new UserImage(
+                this.getFileFromBytes(user['userImage']),
+                this.getSafeUrlFromFile(this.getFileFromBytes(user['userImage']))
+            );
+            const loggedUserAudio: UserAudio = new UserAudio(
+                this.getFileFromBytes(user['userAudio']),
+                this.getSafeUrlFromFile(this.getFileFromBytes(user['userAudio']))
+            );
 
             const loggedUser = new User(
                 user['nome'],
@@ -123,7 +140,8 @@ export class AuthService {
                 user['email'],
                 user['password'],
                 user['dataDiNascita'],
-                loggedUserImage
+                loggedUserImage,
+                loggedUserAudio
             );
 
             this.tokenExpirationDate = new Date(loggedUserAuthData.tokenExpiration);
@@ -134,11 +152,11 @@ export class AuthService {
         }
     }
 
-    private getUserImageFromBytes(userImageBytes: any): UserImage {
+    private getFileFromBytes(bytes: any): File {
 
-        const nome = userImageBytes['nome'];
-        const picByte = userImageBytes['picByte'];
-        const imageType = userImageBytes['type'];
+        const nome = bytes['nome'];
+        const type = bytes['type'];
+        const picByte = bytes['picByte'];
 
         // FROM BYTES TO BLOB
         const byteString = window.atob(picByte);
@@ -149,18 +167,15 @@ export class AuthService {
             int8Array[i] = byteString.charCodeAt(i);
         }
 
-        const blob = new Blob([int8Array], { type: imageType });
+        const blob = new Blob([int8Array], { type: type });
         // END FROM BYTES TO BLOB
 
         // FROM BLOB TO FILE
-        const file = new File([blob], nome, { type: imageType });
+        return new File([blob], nome, { type: type });
+    }
 
+    private getSafeUrlFromFile(file: File): SafeUrl {
         // CREATING SAFE_URL FROM FILE
-        const url: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
-
-        // CREATING USER_IMAGE
-        const userImage: UserImage = new UserImage(file, url);
-
-        return userImage;
+        return this.domSanitizer.bypassSecurityTrustUrl(window.URL.createObjectURL(file));
     }
 }

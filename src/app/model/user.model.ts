@@ -1,4 +1,5 @@
 import { UserImage } from "./user-image.model";
+import { UserAudio } from "./user-audio.model";
 
 export class User {
     constructor(
@@ -7,6 +8,7 @@ export class User {
         private email: string,
         private password: string,
         private dataDiNascita: Date,
-        private userImage: UserImage
+        private userImage: UserImage,
+        private userAudio: UserAudio,
     ) { }
 }
